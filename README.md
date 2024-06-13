@@ -10,6 +10,7 @@ Create a new file named .env in the root directory of your project and add the f
     PGPORT=5432
 
 Replace the values with your actual database and server configurations.
+
 Step 1: Install Dependencies
 
 Install node modules:
