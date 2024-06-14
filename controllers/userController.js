@@ -3,7 +3,11 @@ const User = require("../models/userModel");
 const getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.json(users);
+    const transformedUsers = users.map((user) => {
+      const { _id, ...rest } = user.toObject();
+      return { ...rest, id: _id.toString() };
+    });
+    res.json(transformedUsers);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: "Internal server error" });

@@ -10,15 +10,12 @@ const fetchDataMiddleware = async (req, res, next) => {
 
     const userCount = await User.countDocuments();
     if (userCount === 0) {
-      await User.insertMany(
-        fetchedUsers.map((user) => ({
-          name: user.name,
-          email: user.email,
-        }))
-      );
+      const usersToInsert = fetchedUsers.map(({ id, name, email }) => ({ id, name, email }));
+      await User.insertMany(usersToInsert);
     }
   } catch (error) {
     console.error("Error fetching or inserting users data:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 
   next();
